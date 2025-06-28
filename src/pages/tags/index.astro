@@ -6,36 +6,76 @@ const allPosts = Object.values(
 const tags = [
   ...new Set(allPosts.map((post: any) => post.frontmatter.tags).flat()),
 ];
-const pageTitle = "Tag Index";
+const pageTitle = "Tags - Holo Fans TH";
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <div class="tags">
-    {
-      tags.map((tag) => (
-        <p class="tag">
-          <a href={`/tags/${tag}`}>{tag}</a>
-        </p>
-      ))
-    }
+  <!-- Hero Section -->
+  <section class="relative py-16 mb-16">
+    <div class="relative py-12 w-fit mx-auto mb-8">
+      <div class="absolute z-10 w-full flex flex-col items-center mt-12 font-black text-3xl drop-shadow-[0_0_8px_white] dark:drop-shadow-[0_0_8px_black]">
+        TAGS
+      </div>
+      <div class="text-8xl mt-4 opacity-40 font-black bg-gradient-to-r from-pink-400 via-blue-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_white] dark:drop-shadow-[0_0_8px_black]">
+        タグ
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <div class="content slide-in max-w-6xl mx-auto">
+    <div class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8 mb-8">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100 bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent">
+        Explore by Tags
+      </h2>
+      <p class="text-lg text-gray-700 dark:text-gray-300 mb-8">
+        Discover blog posts organized by topics and themes. Click on any tag to see all related posts.
+      </p>
+    </div>
+
+    <!-- Tags Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      {
+        tags.map((tag, index) => (
+          <a
+            href={`/tags/${tag}`}
+            class="group relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden border border-pink-200/50 dark:border-pink-500/30 hover:border-pink-300 dark:hover:border-pink-400"
+            style={`animation-delay: ${index * 0.1}s`}
+          >
+            <!-- Gradient overlay on hover -->
+            <div class="absolute inset-0 bg-gradient-to-br from-pink-400/10 via-blue-400/10 to-yellow-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            
+            <!-- Tag content -->
+            <div class="relative z-10 p-6 text-center">
+              <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-pink-400 to-blue-400 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-white">
+                  <path d="M20.59 13.41L13.42 20.58C13.2343 20.766 13.0137 20.9135 12.7709 21.0141C12.5281 21.1148 12.2678 21.1666 12.005 21.1666C11.7422 21.1666 11.4819 21.1148 11.2391 21.0141C10.9963 20.9135 10.7757 20.766 10.59 20.58L2 12V2H12L20.59 10.59C20.9625 10.9625 21.1666 11.4696 21.1666 12C21.1666 12.5304 20.9625 13.0375 20.59 13.41Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
+                {tag}
+              </h3>
+              <div class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                {allPosts.filter((post: any) => post.frontmatter.tags.includes(tag)).length} posts
+              </div>
+            </div>
+            
+            <!-- Bottom border animation -->
+            <div class="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-pink-400 to-blue-400 transition-all duration-300 group-hover:w-full"></div>
+          </a>
+        ))
+      }
+    </div>
+
+    {tags.length === 0 && (
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4">🏷️</div>
+        <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">No tags yet</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">Tags will appear here when blog posts are added with tags.</p>
+        <a href="/blog/" class="px-6 py-3 bg-gradient-to-r from-pink-400 to-blue-400 text-white font-bold rounded-lg hover:from-pink-500 hover:to-blue-500 transition-all duration-300 shadow-lg">
+          View Blog
+        </a>
+      </div>
+    )}
   </div>
 </BaseLayout>
-<style>
-  a {
-    color: #00539f;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .tag {
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: 0.5em;
-    padding: 0.5em 1em;
-    font-size: 1.15em;
-    background-color: #f8fcfd;
-  }
-</style>

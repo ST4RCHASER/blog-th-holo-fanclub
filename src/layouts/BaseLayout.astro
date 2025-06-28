@@ -5,18 +5,21 @@ import "../styles/global.css";
 const { pageTitle } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="en" class="ibm-plex-sans-regular">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
   </head>
-  <body>
+  <body
+    class="min-h-screen w-screen bg-gradient-to-br from-pink-50 via-blue-50 to-yellow-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900 transition-all duration-300"
+  >
     <Header />
-    <h1>{pageTitle}</h1>
-    <slot />
+    <main class="container mx-auto px-4 py-24 sm:px-6 lg:px-8">
+      <slot />
+    </main>
     <Footer />
     <script>
       import "../scripts/menu.js";

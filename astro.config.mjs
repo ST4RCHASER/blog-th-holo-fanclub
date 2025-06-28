@@ -2,9 +2,10 @@
 import { defineConfig } from "astro/config";
 
 import preact from "@astrojs/preact";
+import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
-  integrations: [preact()],
+  site: "https://blog-th.holofan.club",
+  integrations: [preact(), tailwind()],
 });

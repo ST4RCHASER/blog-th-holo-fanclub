@@ -1,13 +1,426 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlogPost from "../components/BlogPost.astro";
-const pageTitle = "My Astro Learning Blog";
+const pageTitle = "Blog - Holo Fans TH";
 const allPosts = Object.values(await import.meta.glob('./posts/*.md', { eager: true }));
+
+// Sort posts by date (newest first)
+const sortedPosts = allPosts.sort((a: any, b: any) => 
+  new Date(b.frontmatter.pubDate).getTime() - new Date(a.frontmatter.pubDate).getTime()
+);
+
+// Get all unique tags with post counts
+const tagCounts: Record<string, number> = allPosts.reduce((acc: Record<string, number>, post: any) => {
+  post.frontmatter.tags?.forEach((tag: string) => {
+    acc[tag] = (acc[tag] || 0) + 1;
+  });
+  return acc;
+}, {});
+
+const allTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]); // Sort by frequency
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <p>This is where I will post about my journey learning Astro.</p>
-  <ul>
-    {allPosts.map((post:any) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-  </ul>
+  <!-- Hero Section -->
+  <section class="relative py-16 mb-16">
+    <div class="relative py-12 w-fit mx-auto mb-8">
+      <div class="absolute z-10 w-full flex flex-col items-center mt-12 font-black text-3xl drop-shadow-[0_0_8px_white] dark:drop-shadow-[0_0_8px_black]">
+        BLOG
+      </div>
+      <div class="text-8xl mt-4 opacity-40 font-black bg-gradient-to-r from-pink-400 via-blue-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_white] dark:drop-shadow-[0_0_8px_black]">
+        ブログ
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <div class="content slide-in max-w-6xl mx-auto">
+    <!-- Blog Header -->
+    <div class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8 mb-8">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100 bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent">
+        My Astro Learning Journey
+      </h2>
+      <p class="text-lg text-gray-700 dark:text-gray-300 mb-8">
+        This is where I will post about my journey learning Astro. Each post represents a step in my learning process.
+      </p>
+      
+      <!-- Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-gradient-to-r from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-pink-600 dark:text-pink-400">{allPosts.length}</div>
+          <div class="text-sm text-pink-700 dark:text-pink-300">Total Posts</div>
+        </div>
+        <div class="bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{allTags.length}</div>
+          <div class="text-sm text-blue-700 dark:text-blue-300">Categories</div>
+        </div>
+        <div class="bg-gradient-to-r from-yellow-100 to-yellow-200 dark:from-yellow-900/30 dark:to-yellow-800/30 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+            {allPosts.length > 0 ? new Date((allPosts[0] as any).frontmatter.pubDate).getFullYear() : '2024'}
+          </div>
+          <div class="text-sm text-yellow-700 dark:text-yellow-300">Since</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-6 mb-8">
+      <div class="flex flex-col gap-4">
+        <!-- Search Bar -->
+        <div class="flex-1">
+          <input 
+            type="text" 
+            id="searchInput"
+            placeholder="Search posts by title, description, or tags..." 
+            class="w-full px-4 py-3 rounded-lg border border-pink-200 dark:border-pink-500/50 focus:border-pink-400 dark:focus:border-pink-400 focus:ring-2 focus:ring-pink-200 dark:focus:ring-pink-500/30 transition-all duration-300 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-800 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+          />
+        </div>
+        
+        <!-- Tag Filter Controls -->
+        <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+          <!-- Tag Dropdown -->
+          <div class="relative flex-1">
+            <button 
+              id="tagDropdownBtn"
+              class="w-full sm:w-64 px-4 py-3 bg-white dark:bg-gray-800 border border-pink-200 dark:border-pink-500/50 rounded-lg text-left flex items-center justify-between hover:border-pink-400 dark:hover:border-pink-400 transition-all duration-300 text-gray-800 dark:text-gray-100"
+            >
+              <span id="selectedTagText">All Posts</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="text-gray-500 dark:text-gray-400 transition-transform duration-300">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            
+            <!-- Dropdown Menu -->
+            <div 
+              id="tagDropdown"
+              class="absolute bottom-full left-0 right-0 sm:w-64 mb-1 bg-white dark:bg-gray-800 border border-pink-200 dark:border-pink-500/50 rounded-lg shadow-xl max-h-64 overflow-hidden hidden"
+              style="z-index: 999999;"
+            >
+              <!-- Tag Search -->
+              <div class="p-3 border-b border-pink-100 dark:border-pink-500/30">
+                <input 
+                  type="text" 
+                  id="tagSearchInput"
+                  placeholder="Search tags..." 
+                  class="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded-md focus:border-pink-400 dark:focus:border-pink-400 focus:ring-1 focus:ring-pink-200 dark:focus:ring-pink-500/30 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+                />
+              </div>
+              
+              <!-- Tag List -->
+              <div id="tagList" class="max-h-48 overflow-y-auto">
+                <button 
+                  class="tag-option w-full px-4 py-2 text-left hover:bg-pink-50 dark:hover:bg-pink-900/30 transition-colors duration-200 flex items-center justify-between text-gray-800 dark:text-gray-100"
+                  data-tag="all"
+                >
+                  <span>All Posts</span>
+                  <span class="text-sm text-gray-500 dark:text-gray-400">({allPosts.length})</span>
+                </button>
+                {allTags.map((tag) => (
+                  <button 
+                    class="tag-option w-full px-4 py-2 text-left hover:bg-pink-50 dark:hover:bg-pink-900/30 transition-colors duration-200 flex items-center justify-between text-gray-800 dark:text-gray-100"
+                    data-tag={tag}
+                  >
+                    <span>{tag}</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">({tagCounts[tag]})</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          <!-- Quick Filter Buttons (Top 5 most used tags) -->
+          <div class="flex flex-wrap gap-2">
+            {allTags.slice(0, 5).map((tag) => (
+              <button 
+                class="quick-tag-btn px-3 py-2 bg-gradient-to-r from-pink-100 to-blue-100 dark:from-pink-900/30 dark:to-blue-900/30 text-gray-700 dark:text-gray-200 text-sm rounded-lg hover:from-pink-200 hover:to-blue-200 dark:hover:from-pink-800/40 dark:hover:to-blue-800/40 transition-all duration-300 shadow-sm hover:shadow-md"
+                data-tag={tag}
+              >
+                {tag} ({tagCounts[tag]})
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Posts Grid -->
+    <div id="postsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {sortedPosts.map((post: any, index) => (
+        <div 
+          class="post-card bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-xl shadow-lg overflow-hidden hover:scale-105 transition-all duration-300 border border-pink-200/50 dark:border-pink-500/30 hover:border-pink-300 dark:hover:border-pink-400 group"
+          data-tags={post.frontmatter.tags?.join(' ') || ''}
+          data-title={post.frontmatter.title?.toLowerCase() || ''}
+          data-description={post.frontmatter.description?.toLowerCase() || ''}
+          data-search-text={`${post.frontmatter.title?.toLowerCase() || ''} ${post.frontmatter.description?.toLowerCase() || ''} ${post.frontmatter.tags?.join(' ')?.toLowerCase() || ''}`}
+          style={`animation-delay: ${index * 0.1}s`}
+        >
+          <!-- Post Image -->
+          {post.frontmatter.image && (
+            <div class="relative h-48 overflow-hidden">
+              <img 
+                src={post.frontmatter.image.url} 
+                alt={post.frontmatter.image.alt || post.frontmatter.title}
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            </div>
+          )}
+          
+          <!-- Post Content -->
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-2 h-2 bg-gradient-to-r from-pink-400 to-blue-400 rounded-full"></div>
+              <span class="text-sm text-gray-500 dark:text-gray-400">
+                {new Date(post.frontmatter.pubDate).toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+              </span>
+            </div>
+            
+            <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
+              <a href={post.url}>{post.frontmatter.title}</a>
+            </h3>
+            
+            {post.frontmatter.description && (
+              <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{post.frontmatter.description}</p>
+            )}
+            
+            <!-- Tags -->
+            {post.frontmatter.tags && (
+              <div class="flex flex-wrap gap-2 mb-4">
+                {post.frontmatter.tags.map((tag: string) => (
+                  <span class="px-2 py-1 text-xs bg-gradient-to-r from-pink-100 to-blue-100 dark:from-pink-900/30 dark:to-blue-900/30 text-gray-700 dark:text-gray-200 rounded-full">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+            
+            <a 
+              href={post.url} 
+              class="inline-flex items-center gap-2 text-pink-400 dark:text-pink-300 font-bold hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-300 group-hover:gap-3"
+            >
+              Read More 
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="transition-transform duration-300 group-hover:translate-x-1">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {allPosts.length === 0 && (
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4">📝</div>
+        <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">No posts yet</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">Check back soon for my first blog post!</p>
+        <a href="/" class="px-6 py-3 bg-gradient-to-r from-pink-400 to-blue-400 text-white font-bold rounded-lg hover:from-pink-500 hover:to-blue-500 transition-all duration-300 shadow-lg">
+          Back to Home
+        </a>
+      </div>
+    )}
+  </div>
 </BaseLayout>
+
+<script>
+  // Search and filter functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+    const tagSearchInput = document.getElementById('tagSearchInput') as HTMLInputElement;
+    const tagDropdownBtn = document.getElementById('tagDropdownBtn');
+    const tagDropdown = document.getElementById('tagDropdown');
+    const selectedTagText = document.getElementById('selectedTagText');
+    const tagList = document.getElementById('tagList');
+    const postsGrid = document.getElementById('postsGrid');
+    const postCards = document.querySelectorAll('.post-card');
+    const tagOptions = document.querySelectorAll('.tag-option');
+    const quickTagBtns = document.querySelectorAll('.quick-tag-btn');
+
+    let currentFilter = 'all';
+    let isDropdownOpen = false;
+
+    // Toggle dropdown
+    tagDropdownBtn?.addEventListener('click', () => {
+      isDropdownOpen = !isDropdownOpen;
+      if (isDropdownOpen) {
+        tagDropdown?.classList.remove('hidden');
+        tagDropdownBtn?.querySelector('svg')?.classList.add('rotate-180');
+      } else {
+        tagDropdown?.classList.add('hidden');
+        tagDropdownBtn?.querySelector('svg')?.classList.remove('rotate-180');
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!tagDropdownBtn?.contains(e.target as Node) && !tagDropdown?.contains(e.target as Node)) {
+        isDropdownOpen = false;
+        tagDropdown?.classList.add('hidden');
+        tagDropdownBtn?.querySelector('svg')?.classList.remove('rotate-180');
+      }
+    });
+
+    // Tag search functionality
+    tagSearchInput?.addEventListener('input', (e) => {
+      const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+      tagOptions.forEach(option => {
+        const optionElement = option as HTMLElement;
+        const tagText = option.textContent?.toLowerCase() || '';
+        if (tagText.includes(searchTerm)) {
+          optionElement.style.display = 'block';
+        } else {
+          optionElement.style.display = 'none';
+        }
+      });
+    });
+
+    // Tag option selection
+    tagOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        const tag = option.getAttribute('data-tag');
+        const tagText = option.querySelector('span')?.textContent || 'All Posts';
+        
+        currentFilter = tag || 'all';
+        selectedTagText!.textContent = tagText;
+        
+        // Close dropdown
+        isDropdownOpen = false;
+        tagDropdown?.classList.add('hidden');
+        tagDropdownBtn?.querySelector('svg')?.classList.remove('rotate-180');
+        
+        filterPosts(searchInput?.value.toLowerCase() || '', currentFilter);
+      });
+    });
+
+    // Quick tag buttons
+    quickTagBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tag = btn.getAttribute('data-tag');
+        const tagText = btn.textContent?.split(' (')[0] || '';
+        
+        currentFilter = tag || 'all';
+        selectedTagText!.textContent = tagText;
+        
+        filterPosts(searchInput?.value.toLowerCase() || '', currentFilter);
+      });
+    });
+
+    // Search functionality
+    searchInput?.addEventListener('input', (e) => {
+      const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+      filterPosts(searchTerm, currentFilter);
+    });
+
+    function filterPosts(searchTerm: string, tagFilter: string) {
+      let visibleCount = 0;
+      
+      postCards.forEach(card => {
+        const cardElement = card as HTMLElement;
+        const searchText = cardElement.getAttribute('data-search-text') || '';
+        const tags = cardElement.getAttribute('data-tags') || '';
+        
+        const matchesSearch = searchTerm === '' || searchText.includes(searchTerm);
+        const matchesTag = tagFilter === 'all' || tags.includes(tagFilter);
+        
+        if (matchesSearch && matchesTag) {
+          cardElement.style.display = 'block';
+          cardElement.style.opacity = '1';
+          cardElement.style.transform = 'translateY(0)';
+          visibleCount++;
+        } else {
+          cardElement.style.display = 'none';
+        }
+      });
+
+      // Show/hide no results message
+      const noResultsMsg = document.getElementById('noResultsMsg');
+      if (visibleCount === 0 && (searchTerm !== '' || tagFilter !== 'all')) {
+        if (!noResultsMsg) {
+          const msg = document.createElement('div');
+          msg.id = 'noResultsMsg';
+          msg.className = 'text-center py-16 col-span-full';
+          msg.innerHTML = `
+            <div class="text-6xl mb-4">🔍</div>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">No posts found</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">Try adjusting your search terms or filters.</p>
+            <button onclick="clearFilters()" class="px-6 py-3 bg-gradient-to-r from-pink-400 to-blue-400 text-white font-bold rounded-lg hover:from-pink-500 hover:to-blue-500 transition-all duration-300 shadow-lg">
+              Clear Filters
+            </button>
+          `;
+          postsGrid?.appendChild(msg);
+        }
+      } else {
+        noResultsMsg?.remove();
+      }
+    }
+
+    // Clear filters function (global for button onclick)
+    (window as any).clearFilters = function() {
+      searchInput.value = '';
+      currentFilter = 'all';
+      selectedTagText!.textContent = 'All Posts';
+      
+      filterPosts('', 'all');
+    };
+  });
+</script>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .post-card {
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Custom scrollbar for tag dropdown */
+  #tagList::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  #tagList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+  
+  #tagList::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #ec4899, #3b82f6);
+    border-radius: 3px;
+  }
+  
+  #tagList::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #db2777, #2563eb);
+  }
+
+  /* Dark theme scrollbar */
+  .dark #tagList::-webkit-scrollbar-track {
+    background: #374151;
+  }
+  
+  .dark #tagList::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #ec4899, #3b82f6);
+  }
+  
+  .dark #tagList::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #db2777, #2563eb);
+  }
+</style>

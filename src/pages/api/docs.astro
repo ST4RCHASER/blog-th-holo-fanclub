@@ -1,0 +1,339 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const pageTitle = "API Documentation - Holo Fans TH";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <div class="content slide-in max-w-4xl mx-auto mt-24">
+    <!-- Header -->
+    <div
+      class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8 mb-8"
+    >
+      <h1
+        class="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100 bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent"
+      >
+        API Documentation
+      </h1>
+      <p class="text-lg text-gray-700 dark:text-gray-300">
+        Welcome to the Holo Fans TH API! This API provides access to our blog
+        posts and tags in JSON format for external applications and
+        integrations.
+      </p>
+    </div>
+
+    <!-- Base URL -->
+    <div
+      class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8 mb-8"
+    >
+      <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+        Base URL
+      </h2>
+      <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+        <code class="text-pink-600 dark:text-pink-400"
+          >https://yourdomain.com/api</code
+        >
+      </div>
+    </div>
+
+    <!-- Endpoints -->
+    <div class="space-y-8">
+      <!-- All Posts -->
+      <div
+        class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8"
+      >
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+          Get All Posts
+        </h2>
+        <div class="mb-4">
+          <span
+            class="inline-block bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded text-sm font-medium"
+            >GET</span
+          >
+          <code class="ml-2 text-pink-600 dark:text-pink-400"
+            >/api/posts.json</code
+          >
+        </div>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          Returns all blog posts with metadata.
+        </p>
+        <div
+          class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"
+        >
+          <pre
+            class="text-sm text-gray-800 dark:text-gray-200"><code>{`{
+  "success": true,
+  "data": {
+    "posts": [
+      {
+        "id": "post-slug",
+        "title": "Post Title",
+        "description": "Post description",
+        "pubDate": "2024-01-01",
+        "tags": ["tag1", "tag2"],
+        "url": "/posts/post-slug/",
+        "image": {
+          "url": "image-url",
+          "alt": "Image alt text"
+        }
+      }
+    ],
+    "meta": {
+      "totalPosts": 10,
+      "totalTags": 5,
+      "lastUpdated": "2024-01-01T00:00:00.000Z"
+    }
+  }
+}`}</code></pre>
+        </div>
+      </div>
+
+      <!-- Single Post -->
+      <div
+        class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8"
+      >
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+          Get Single Post
+        </h2>
+        <div class="mb-4">
+          <span
+            class="inline-block bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded text-sm font-medium"
+            >GET</span
+          >
+          <code class="ml-2 text-pink-600 dark:text-pink-400"
+            >/api/posts/[id].json</code
+          >
+        </div>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          Returns a specific post by its slug ID.
+        </p>
+        <div
+          class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"
+        >
+          <pre
+            class="text-sm text-gray-800 dark:text-gray-200"><code>{`{
+  "success": true,
+  "data": {
+    "id": "post-slug",
+    "title": "Post Title",
+    "description": "Post description",
+    "content": "Full post content...",
+    "pubDate": "2024-01-01",
+    "tags": ["tag1", "tag2"],
+    "url": "/posts/post-slug/"
+  }
+}`}</code></pre>
+        </div>
+      </div>
+
+      <!-- All Tags -->
+      <div
+        class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8"
+      >
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+          Get All Tags
+        </h2>
+        <div class="mb-4">
+          <span
+            class="inline-block bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded text-sm font-medium"
+            >GET</span
+          >
+          <code class="ml-2 text-pink-600 dark:text-pink-400"
+            >/api/tags.json</code
+          >
+        </div>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          Returns all tags with post counts.
+        </p>
+        <div
+          class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"
+        >
+          <pre
+            class="text-sm text-gray-800 dark:text-gray-200"><code>{`{
+  "success": true,
+  "data": {
+    "tags": [
+      {
+        "name": "tag-name",
+        "count": 5,
+        "url": "/tags/tag-name"
+      }
+    ],
+    "meta": {
+      "totalTags": 10,
+      "lastUpdated": "2024-01-01T00:00:00.000Z"
+    }
+  }
+}`}</code></pre>
+        </div>
+      </div>
+
+      <!-- Posts by Tag -->
+      <div
+        class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8"
+      >
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+          Get Posts by Tag
+        </h2>
+        <div class="mb-4">
+          <span
+            class="inline-block bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded text-sm font-medium"
+            >GET</span
+          >
+          <code class="ml-2 text-pink-600 dark:text-pink-400"
+            >/api/tags/[tag].json</code
+          >
+        </div>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          Returns posts filtered by a specific tag with pagination support.
+        </p>
+
+        <h3 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100">
+          Query Parameters
+        </h3>
+        <div class="mb-4 space-y-2">
+          <div class="flex items-center gap-2">
+            <code class="text-pink-600 dark:text-pink-400">limit</code>
+            <span class="text-gray-600 dark:text-gray-400"
+              >- Number of posts to return (default: 10)</span
+            >
+          </div>
+          <div class="flex items-center gap-2">
+            <code class="text-pink-600 dark:text-pink-400">offset</code>
+            <span class="text-gray-600 dark:text-gray-400"
+              >- Number of posts to skip (default: 0)</span
+            >
+          </div>
+          <div class="flex items-center gap-2">
+            <code class="text-pink-600 dark:text-pink-400">sort</code>
+            <span class="text-gray-600 dark:text-gray-400"
+              >- Sort order: 'date' or 'title' (default: 'date')</span
+            >
+          </div>
+        </div>
+
+        <div
+          class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"
+        >
+          <pre
+            class="text-sm text-gray-800 dark:text-gray-200"><code>{`{
+  "success": true,
+  "data": {
+    "tag": "tag-name",
+    "posts": [...],
+    "pagination": {
+      "total": 15,
+      "limit": 10,
+      "offset": 0,
+      "hasMore": true,
+      "totalPages": 2
+    }
+  }
+}`}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Examples -->
+    <div
+      class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8 mt-8"
+    >
+      <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+        Usage Examples
+      </h2>
+
+      <div class="space-y-4">
+        <div>
+          <h3
+            class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100"
+          >
+            JavaScript Fetch
+          </h3>
+          <div
+            class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"
+          >
+            <pre
+              class="text-sm text-gray-800 dark:text-gray-200"><code>{`// Get all posts
+fetch('/api/posts.json')
+  .then(response => response.json())
+  .then(data => console.log(data));
+
+// Get posts by tag with pagination
+fetch('/api/tags/hololive.json?limit=5&offset=0&sort=date')
+  .then(response => response.json())
+  .then(data => console.log(data));`}</code></pre>
+          </div>
+        </div>
+
+        <div>
+          <h3
+            class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100"
+          >
+            cURL
+          </h3>
+          <div
+            class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"
+          >
+            <pre
+              class="text-sm text-gray-800 dark:text-gray-200"><code>{`# Get all posts
+curl https://yourdomain.com/api/posts.json
+
+# Get specific post
+curl https://yourdomain.com/api/posts/my-post-slug.json
+
+# Get posts by tag
+curl "https://yourdomain.com/api/tags/hololive.json?limit=5&sort=date"`}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rate Limiting & Caching -->
+    <div
+      class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8 mt-8"
+    >
+      <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+        Rate Limiting & Caching
+      </h2>
+      <div class="space-y-4 text-gray-700 dark:text-gray-300">
+        <p>
+          <strong>Caching:</strong> All API responses are cached for 5 minutes to
+          improve performance.
+        </p>
+        <p>
+          <strong>CORS:</strong> All endpoints support CORS and can be accessed from
+          any domain.
+        </p>
+        <p>
+          <strong>Rate Limiting:</strong> Currently no rate limiting is implemented,
+          but please be respectful of server resources.
+        </p>
+      </div>
+    </div>
+
+    <!-- Error Handling -->
+    <div
+      class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8 mt-8"
+    >
+      <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+        Error Handling
+      </h2>
+      <p class="text-gray-700 dark:text-gray-300 mb-4">
+        All API endpoints return consistent error responses:
+      </p>
+      <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto">
+        <pre
+          class="text-sm text-gray-800 dark:text-gray-200"><code>{`{
+  "success": false,
+  "error": "Error type",
+  "message": "Human readable error message"
+}`}</code></pre>
+      </div>
+
+      <div class="mt-4 space-y-2 text-gray-700 dark:text-gray-300">
+        <p><strong>400:</strong> Bad Request - Missing required parameters</p>
+        <p><strong>404:</strong> Not Found - Post or tag not found</p>
+        <p><strong>500:</strong> Internal Server Error - Server-side error</p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,8 +1,24 @@
 ---
+
 ---
 
-<div class="hamburger">
-  <span class="line"></span>
-  <span class="line"></span>
-  <span class="line"></span>
-</div>
+<button
+  class="hamburger group p-3 cursor-pointer hover:bg-gradient-to-r hover:from-pink-50 hover:to-blue-50 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl border border-pink-200/50 hover:border-pink-300"
+  id="hamburger"
+>
+  <div class="relative">
+    <span
+      class="line block w-7 h-0.5 bg-gradient-to-r from-pink-400 to-blue-400 mb-1.5 transition-all duration-300 rounded-full group-hover:from-pink-500 group-hover:to-blue-500"
+    ></span>
+    <span
+      class="line block w-7 h-0.5 bg-gradient-to-r from-blue-400 to-yellow-400 mb-1.5 transition-all duration-300 rounded-full group-hover:from-blue-500 group-hover:to-yellow-500"
+    ></span>
+    <span
+      class="line block w-7 h-0.5 bg-gradient-to-r from-yellow-400 to-pink-400 transition-all duration-300 rounded-full group-hover:from-yellow-500 group-hover:to-pink-500"
+    ></span>
+  </div>
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-pink-400/10 to-blue-400/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+  >
+  </div>
+</button>

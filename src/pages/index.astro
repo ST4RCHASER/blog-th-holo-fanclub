@@ -1,9 +1,219 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Greeting from '../components/Greeting';
-const pageTitle = "Home Page";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Greeting from "../components/Greeting";
+import Aurora from "../components/Aurora.jsx";
+const pageTitle = "Holo Fans TH - Home";
+
+// Get all posts and sort by date (newest first)
+const allPosts = Object.values(await import.meta.glob('./posts/*.md', { eager: true }));
+const sortedPosts = allPosts.sort((a: any, b: any) => 
+  new Date(b.frontmatter.pubDate).getTime() - new Date(a.frontmatter.pubDate).getTime()
+);
+
+// Get the latest 6 posts for the home page
+const latestPosts = sortedPosts.slice(0, 6);
+
+// Get all unique tags with post counts
+const tagCounts: Record<string, number> = allPosts.reduce((acc: Record<string, number>, post: any) => {
+  post.frontmatter.tags?.forEach((tag: string) => {
+    acc[tag] = (acc[tag] || 0) + 1;
+  });
+  return acc;
+}, {});
+
+const allTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]);
 ---
+
+
 <BaseLayout pageTitle={pageTitle}>
-  <h2>My awesome blog subtitle</h2>
-  <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
+  <!-- Aurora Background - Only visible in dark theme -->
+  <div class="absolute inset-0 z-0 overflow-hidden h-3/4 w-screen blur-3xl slide-in">
+    <Aurora 
+      colorStops={["#ec4899", "#3b82f6", "#f59e0b"]}
+      amplitude={0.5}
+      blend={1}
+      client:load
+    />
+  </div>
+
+  <!-- Content Section -->
+  <div class="content slide-in max-w-6xl mx-auto mt-24">
+    <!-- Welcome Section -->
+    <div class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8 mb-16">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100 bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent">
+        Welcome to Holo Fans TH
+      </h2>
+      <p class="text-lg text-gray-700 dark:text-gray-300 mb-8">
+        This site is contains the blog of Holo Fans TH. that includes our works and activities and more.
+      </p>
+      
+      <!-- Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-gradient-to-r from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-pink-600 dark:text-pink-400">{allPosts.length}</div>
+          <div class="text-sm text-pink-700 dark:text-pink-300">Total Posts</div>
+        </div>
+        <div class="bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{allTags.length}</div>
+          <div class="text-sm text-blue-700 dark:text-blue-300">Categories</div>
+        </div>
+        <div class="bg-gradient-to-r from-yellow-100 to-yellow-200 dark:from-yellow-900/30 dark:to-yellow-800/30 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+            {allPosts.length > 0 ? new Date((allPosts[0] as any).frontmatter.pubDate).getFullYear() : '2024'}
+          </div>
+          <div class="text-sm text-yellow-700 dark:text-yellow-300">Since</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Latest Posts Section -->
+    <section class="mb-16">
+      <div class="relative py-12 w-fit mx-auto mb-8">
+        <div
+          class="absolute z-10 w-full flex flex-col items-center mt-12 font-black text-3xl drop-shadow-[0_0_8px_white] dark:drop-shadow-[0_0_8px_black]"
+        >
+          LATEST POSTS
+        </div>
+        <div
+          class="text-8xl mt-4 opacity-40 font-black bg-gradient-to-r from-pink-400 via-blue-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_white] dark:drop-shadow-[0_0_8px_black]"
+        >
+          最新記事
+        </div>
+      </div>
+
+      {latestPosts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {latestPosts.map((post: any, index) => (
+            <div
+              class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-xl shadow-lg overflow-hidden hover:scale-105 transition-all duration-300 border border-pink-200/50 dark:border-pink-500/30 hover:border-pink-300 dark:hover:border-pink-400 group"
+              style={`animation-delay: ${index * 0.1}s`}
+            >
+              <!-- Post Image -->
+              {post.frontmatter.image && (
+                <div class="relative h-48 overflow-hidden">
+                  <img 
+                    src={post.frontmatter.image.url} 
+                    alt={post.frontmatter.image.alt || post.frontmatter.title}
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+              )}
+              
+              <!-- Fallback Gradient if no image -->
+              {!post.frontmatter.image && (
+                <div class="h-48 bg-gradient-to-br from-pink-200 to-blue-200 dark:from-pink-900/30 dark:to-blue-900/30 group-hover:from-pink-300 group-hover:to-blue-300 dark:group-hover:from-pink-800/40 dark:group-hover:to-blue-800/40 transition-all duration-300"></div>
+              )}
+              
+              <div class="p-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <div class="w-2 h-2 bg-gradient-to-r from-pink-400 to-blue-400 rounded-full"></div>
+                  <span class="text-sm text-gray-500 dark:text-gray-400">
+                    {new Date(post.frontmatter.pubDate).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'short', 
+                      day: 'numeric' 
+                    })}
+                  </span>
+                </div>
+                
+                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
+                  <a href={post.url}>{post.frontmatter.title}</a>
+                </h3>
+                
+                {post.frontmatter.description && (
+                  <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{post.frontmatter.description}</p>
+                )}
+                
+                <!-- Tags -->
+                {post.frontmatter.tags && (
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    {post.frontmatter.tags.slice(0, 3).map((tag: string) => (
+                      <span class="px-2 py-1 text-xs bg-gradient-to-r from-pink-100 to-blue-100 dark:from-pink-900/30 dark:to-blue-900/30 text-gray-700 dark:text-gray-200 rounded-full">
+                        {tag}
+                      </span>
+                    ))}
+                    {post.frontmatter.tags.length > 3 && (
+                      <span class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 rounded-full">
+                        +{post.frontmatter.tags.length - 3}
+                      </span>
+                    )}
+                  </div>
+                )}
+                
+                <a 
+                  href={post.url} 
+                  class="inline-flex items-center gap-2 text-pink-400 dark:text-pink-300 font-bold hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-300 group-hover:gap-3"
+                >
+                  Read More 
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="transition-transform duration-300 group-hover:translate-x-1">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <div class="text-6xl mb-4">📝</div>
+          <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">No posts yet</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-8">Check back soon for our first blog post!</p>
+        </div>
+      )}
+    </section>
+
+    <!-- Popular Tags Section -->
+    {allTags.length > 0 && (
+      <section class="mb-16">
+        <div class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8">
+          <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100 bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent">
+            Popular Categories
+          </h3>
+          <div class="flex flex-wrap gap-3">
+            {allTags.slice(0, 8).map((tag) => (
+              <a 
+                href={`/tags/${tag}`}
+                class="group px-4 py-2 bg-gradient-to-r from-pink-100 to-blue-100 dark:from-pink-900/30 dark:to-blue-900/30 text-gray-700 dark:text-gray-200 rounded-full hover:from-pink-200 hover:to-blue-200 dark:hover:from-pink-800/40 dark:hover:to-blue-800/40 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105"
+              >
+                <span class="flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-pink-500 dark:text-pink-400">
+                    <path d="M20.59 13.41L13.42 20.58C13.2343 20.766 13.0137 20.9135 12.7709 21.0141C12.5281 21.1148 12.2678 21.1666 12.005 21.1666C11.7422 21.1666 11.4819 21.1148 11.2391 21.0141C10.9963 20.9135 10.7757 20.766 10.59 20.58L2 12V2H12L20.59 10.59C20.9625 10.9625 21.1666 11.4696 21.1666 12C21.1666 12.5304 20.9625 13.0375 20.59 13.41Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  {tag} ({tagCounts[tag]})
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Call to Action Section -->
+    <section class="mt-16">
+      <div class="flex flex-col sm:flex-row justify-center gap-6">
+        <a
+          href="/blog/"
+          class="px-8 py-4 bg-gradient-to-r from-pink-400 to-blue-400 text-white font-bold rounded-lg hover:from-pink-500 hover:to-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
+        >
+          View All Posts
+        </a>
+        <a
+          href="/tags/"
+          class="px-8 py-4 border-2 border-pink-400 text-pink-400 dark:text-pink-300 font-bold rounded-lg hover:bg-pink-400 hover:text-white dark:hover:bg-pink-400 dark:hover:text-white transition-all duration-300 text-center"
+        >
+          Browse Categories
+        </a>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

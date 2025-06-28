@@ -1,0 +1,234 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+const pageTitle = "404 - Page Not Found - Holo Fans TH";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <div class="content slide-in max-w-4xl mx-auto mt-24">
+    <!-- 404 Hero Section -->
+    <div class="text-center py-16 mb-16">
+      <div class="relative py-12 w-fit mx-auto mb-8">
+        <div
+          class="absolute z-10 w-full flex flex-col items-center mt-12 font-black text-6xl drop-shadow-[0_0_8px_white] dark:drop-shadow-[0_0_8px_black] text-pink-400 dark:text-pink-300"
+        >
+          404
+        </div>
+        <div
+          class="text-9xl mt-4 opacity-40 font-black bg-gradient-to-r from-pink-400 via-blue-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_white] dark:drop-shadow-[0_0_8px_black]"
+        >
+          エラー
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Content -->
+    <div
+      class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8 mb-8"
+    >
+      <div class="text-center">
+        <div class="text-8xl mb-6">😵</div>
+        <h1
+          class="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100 bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent"
+        >
+          Oops! Page Not Found
+        </h1>
+        <p
+          class="text-lg text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto"
+        >
+          The page you're looking for doesn't exist. It might have been moved,
+          deleted, or you entered the wrong URL.
+        </p>
+
+        <!-- Search Suggestion -->
+        <div
+          class="bg-gradient-to-r from-pink-50 to-blue-50 dark:from-pink-900/30 dark:to-blue-900/30 rounded-lg p-6 mb-8"
+        >
+          <h3
+            class="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-100"
+          >
+            Looking for something specific?
+          </h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-4">
+            Try searching our blog or browse our categories to find what you're
+            looking for.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/blog/"
+              class="px-6 py-3 bg-gradient-to-r from-pink-400 to-blue-400 text-white font-bold rounded-lg hover:from-pink-500 hover:to-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Browse Blog
+            </a>
+            <a
+              href="/tags/"
+              class="px-6 py-3 border-2 border-pink-400 text-pink-400 dark:text-pink-300 font-bold rounded-lg hover:bg-pink-400 hover:text-white dark:hover:bg-pink-400 dark:hover:text-white transition-all duration-300"
+            >
+              View Categories
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Options -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Home -->
+      <div
+        class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-6 text-center hover:scale-105 transition-all duration-300 border border-pink-200/50 dark:border-pink-500/30"
+      >
+        <div class="text-4xl mb-4">🏠</div>
+        <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">
+          Go Home
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          Return to the main page
+        </p>
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 text-pink-400 dark:text-pink-300 font-bold hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-300"
+        >
+          Home Page
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            class="transition-transform duration-300 group-hover:translate-x-1"
+          >
+            <path
+              d="M5 12H19M19 12L12 5M19 12L12 19"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Blog -->
+      <div
+        class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-6 text-center hover:scale-105 transition-all duration-300 border border-pink-200/50 dark:border-pink-500/30"
+      >
+        <div class="text-4xl mb-4">📝</div>
+        <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">
+          Latest Posts
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          Check out our recent articles
+        </p>
+        <a
+          href="/blog/"
+          class="inline-flex items-center gap-2 text-pink-400 dark:text-pink-300 font-bold hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-300"
+        >
+          View Blog
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            class="transition-transform duration-300 group-hover:translate-x-1"
+          >
+            <path
+              d="M5 12H19M19 12L12 5M19 12L12 19"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Tags -->
+      <div
+        class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-6 text-center hover:scale-105 transition-all duration-300 border border-pink-200/50 dark:border-pink-500/30"
+      >
+        <div class="text-4xl mb-4">🏷️</div>
+        <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">
+          Categories
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          Browse by topics and tags
+        </p>
+        <a
+          href="/tags/"
+          class="inline-flex items-center gap-2 text-pink-400 dark:text-pink-300 font-bold hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-300"
+        >
+          Browse Tags
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            class="transition-transform duration-300 group-hover:translate-x-1"
+          >
+            <path
+              d="M5 12H19M19 12L12 5M19 12L12 19"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Report Issue -->
+    <div
+      class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-8 mt-12"
+    >
+      <div class="text-center">
+        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">
+          Found a broken link?
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          If you think this page should exist, please let us know so we can fix
+          it.
+        </p>
+        <a
+          href="mailto:contact@holofansth.com?subject=Broken Link Report - 404 Error"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            class="text-gray-500"
+          >
+            <path
+              d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+            <polyline
+              points="22,6 12,13 2,6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></polyline>
+          </svg>
+          Report Issue
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .slide-in {
+    opacity: 0;
+    animation: content-in 0.5s 0.3s ease-out forwards;
+  }
+
+  @keyframes content-in {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

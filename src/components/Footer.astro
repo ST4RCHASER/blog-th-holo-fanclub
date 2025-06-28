@@ -1,17 +1,80 @@
----
-import Social from "./Social.astro";
----
-
-<style>
-  footer {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-</style>
-
-<footer>
-  <Social platform="twitter" username="astrodotbuild" />
-  <Social platform="github" username="withastro" />
-  <Social platform="youtube" username="astrodotbuild" />
+<footer class="mt-32 w-screen h-72">
+  <div
+    class="w-full h-full bg-[#4BCCF9] border-[#FF7B7B] border-t-[32px] text-white text-xs md:text-base"
+  >
+    <div class="flex flex-col md:flex-row px-2 md:px-4 py-4">
+      <div class="px-2 md:px-4 mx-auto w-full md:w-1/2">
+        <div class="flex">
+          <img
+            src="/web-app-manifest-192x192.png"
+            alt=""
+            class="w-12 h-12 md:w-24 md:h-24 bg-white p-2 rounded-full"
+          />
+          <div class="text-lg md:text-2xl font-bold mt-4 md:mt-8 ml-2 md:ml-4">
+            HOLO FANS TH
+          </div>
+        </div>
+        <div class="mt-2 md:mt-4">
+          This fan website is not affiliated with hololive and COVER Corp
+        </div>
+        <div class="mt-2 md:mt-4 text-xs text-right">
+          © {new Date().getFullYear()} HOLO FANS TH
+        </div>
+      </div>
+      <div class="w-full md:w-1/2 mt-4 md:mt-6">
+        <div>
+          Social Media
+          <hr />
+          <div class="flex gap-2 md:gap-4">
+            <div class="mt-2 ml-2">
+              <a
+                href="https://www.facebook.com/holofansTH/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm">Facebook</a
+              >
+            </div>
+            <div class="mt-2 ml-2">
+              <a
+                href="https://x.com/HoloFansTh"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm">X (Twitter)</a
+              >
+            </div>
+            <div class="mt-2 ml-2">
+              <a
+                href="https://x.com/HoloFansTh"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm">Discord</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          Others
+          <hr />
+          <div class="flex gap-2 md:gap-4">
+            <div class="mt-2 ml-2">
+              <a
+                href="https://www.facebook.com/holofansTH/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm">Archives</a
+              >
+            </div>
+            <div class="mt-2 ml-2">
+              <a
+                href="https://www.facebook.com/holofansTH/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm">Gallery</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </footer>
