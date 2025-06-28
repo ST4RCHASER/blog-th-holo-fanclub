@@ -1,5 +1,5 @@
 ---
-const { title, url } = Astro.props;
+const { title, url, image } = Astro.props;
 ---
 
 <div class="p-6">
@@ -11,10 +11,20 @@ const { title, url } = Astro.props;
       {title}
     </a>
   </h3>
-  <div
-    class="h-32 bg-gradient-to-br from-pink-200 to-blue-200 dark:from-pink-900/30 dark:to-blue-900/30 rounded-lg mb-4"
-  >
-  </div>
+  {
+    image ? (
+      <div class="relative h-32 rounded-lg mb-4 overflow-hidden">
+        <img
+          src={image.url}
+          alt={image.alt || title}
+          class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+      </div>
+    ) : (
+      <div class="h-32 bg-gradient-to-br from-pink-200 to-blue-200 dark:from-pink-900/30 dark:to-blue-900/30 rounded-lg mb-4"></div>
+    )
+  }
   <a
     href={url}
     class="text-pink-400 dark:text-pink-300 font-bold hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-200"
