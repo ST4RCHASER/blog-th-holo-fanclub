@@ -7,7 +7,7 @@ author: "⭐"
 image:
   url: "https://m1r.ai/mrC0.webp"
   alt: "Calliope Birthday 2025"
-tags: ["tuktuk", "mori malliope", "birthday", "activities"]
+tags: ["tuktuk", "mori calliope", "birthday", "activities"]
 ---
 
 📍 Location: [Stadium One](https://g.co/kgs/tkwGqnn)
