@@ -24,7 +24,7 @@ export const GET: APIRoute = async () => {
             } : null,
             url: post.url || '',
             readingTime: post.frontmatter.readingTime || null,
-            author: post.frontmatter.author || 'Holo Fans TH',
+            author: post.frontmatter.author || 'HoloFans TH',
             category: post.frontmatter.category || null,
             featured: post.frontmatter.featured || false,
             draft: post.frontmatter.draft || false

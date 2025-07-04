@@ -1,12 +1,12 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
-title: "Calliope Brithday 2025"
+title: "Calliope Birthday 2025"
 pubDate: 2025-03-04
-description: "Calliope Brithday 2025 Tuk-Tuk project"
+description: "Calliope Birthday 2025 Tuk-Tuk project"
 author: "⭐"
 image:
   url: "https://m1r.ai/mrC0.webp"
-  alt: "Calliope Brithday 2025"
+  alt: "Calliope Birthday 2025"
 tags: ["tuktuk", "mori malliope", "birthday", "activities"]
 ---
 

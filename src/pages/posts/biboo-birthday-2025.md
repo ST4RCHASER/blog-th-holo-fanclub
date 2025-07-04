@@ -1,16 +1,16 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
-title: "Biboo Brithday 2025"
+title: "Biboo Birthday 2025"
 pubDate: 2025-04-14
-description: "Biboo Brithday 2025 Tuk-Tuk project"
+description: "Biboo Birthday 2025 project"
 author: "⭐"
 image:
   url: "https://m1r.ai/Pu5ak.jpg"
-  alt: "Biboo Brithday 2025"
-tags: ["tuktuk", "koseki bijou", "birthday", "activities"]
+  alt: "Biboo Birthday 2025"
+tags: ["koseki bijou", "birthday", "activities"]
 ---
 
-📍 Location: [Stadium One](https://g.co/kgs/tkwGqnn)
+📍 Location: [Lumphini Park](https://g.co/kgs/HN6b8Zi)
 
 📅 Date: 2025-04-14
 

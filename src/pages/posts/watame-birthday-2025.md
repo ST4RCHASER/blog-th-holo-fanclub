@@ -1,12 +1,12 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
-title: "Watame Brithday 2025"
+title: "Watame Birthday 2025"
 pubDate: 2025-06-05
-description: "Watame Brithday 2025 Tuk-Tuk project"
+description: "Watame Birthday 2025 Tuk-Tuk project"
 author: "⭐"
 image:
   url: "https://m1r.ai/bwxm.png"
-  alt: "Watame Brithday 2025"
+  alt: "Watame Birthday 2025"
 tags: ["tuktuk", "tsunomaki watame", "birthday", "activities"]
 ---
 
