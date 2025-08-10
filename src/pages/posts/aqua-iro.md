@@ -6,7 +6,7 @@ description: "Minato Aqua graduation watch party"
 author: "⭐"
 image:
   url: "https://m1r.ai/tvB2.webp"
-  alt: "Minato Aqua graduation watch party"
+  alt: "Minato Aqua Graduation Watch Party"
 tags: ["graduation", "minato aqua", "watch party", "activities"]
 ---
 
@@ -18,6 +18,4 @@ tags: ["graduation", "minato aqua", "watch party", "activities"]
 
 [Secret Base (Short Arranged Ver) by Holo Thai Fans](https://x.com/hoshinomiru_m/status/1828888246363009154?s=61&t=OUz8mZG9SH1vycPeTdcsww)
 
-## Gallery
 
-## -

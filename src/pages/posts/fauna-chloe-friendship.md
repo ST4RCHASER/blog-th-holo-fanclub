@@ -30,6 +30,6 @@ tags:
 
 ## SNS Posts
 
-[Event infomation](https://www.facebook.com/photo.php?fbid=122109260714664794&set=pb.61569943847547.-2207520000&type=3)
+[Event information](https://www.facebook.com/photo.php?fbid=122109260714664794&set=pb.61569943847547.-2207520000&type=3)
 
 [Photo gallery](https://www.facebook.com/holofansTH/posts/pfbid0xT4WBZ9SFK7RrjjQePpqVfERRdQ8uf6imPwjT6FsyUMg8tBQamw43MqqdxSUaf6ol)
