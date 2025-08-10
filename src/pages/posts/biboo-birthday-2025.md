@@ -16,6 +16,6 @@ tags: ["koseki bijou", "birthday", "activities"]
 
 ## SNS Posts
 
-[Event infomation](https://www.facebook.com/holofansTH/posts/pfbid0aB75bzdbdgmUz6TBAFsosx4g5bFgX1XbDrAfC7JUECRL1AUZqJVy9Wr2zLkqrTcXl)
+[Event information](https://www.facebook.com/holofansTH/posts/pfbid0aB75bzdbdgmUz6TBAFsosx4g5bFgX1XbDrAfC7JUECRL1AUZqJVy9Wr2zLkqrTcXl)
 
-[Gallery (FB)](https://www.facebook.com/holofansTH/posts/pfbid02npZR3tXq8g8VgBXLHJi4AmbY8eKvKpCrcspf6eZHHftTwdnEADEkXCrgZ3gpDPDHl)
+[Photo gallery (FB)](https://www.facebook.com/holofansTH/posts/pfbid02npZR3tXq8g8VgBXLHJi4AmbY8eKvKpCrcspf6eZHHftTwdnEADEkXCrgZ3gpDPDHl)
